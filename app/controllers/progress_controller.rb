@@ -1,17 +1,30 @@
+require 'reloader/sse'
+
 class ProgressController < ApplicationController
   include ActionController::Live
 
   def index
-    response.headers['Content-Type'] = 'text/plain'
+    # SSE expects the `text/event-stream` content type
+    response.headers['Content-Type'] = 'text/event-stream'
+
+    sse = Reloader::SSE.new(response.stream)
 
     begin
       (0..100).step(10).each{ |i|
-        response.stream.write("#{i}\n")
-        sleep(rand * 3)
+        puts "[ #{i} ]"
+        sse.write( "#{Time.now.strftime("%Y/%m/%d %H:%M:%S")}" + " - #{i}" )
+        sleep( rand(1..3) )
       }
+
+      # 接続終了送信
+#      sse.write("stream_end")
     rescue IOError
+      # When the client disconnects, we'll get an IOError on write
     ensure
-      response.stream.close
+      sse.close
     end
+  end
+
+  def show
   end
 end
