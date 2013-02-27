@@ -53,6 +53,7 @@ GEM
     mime-types (1.21)
     minitest (4.6.1)
     multi_json (1.6.1)
+    pg (0.14.1)
     polyglot (0.3.3)
     puma (1.6.3)
       rack (~> 1.2)
@@ -113,6 +114,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0.beta1)
   jbuilder (~> 1.0.1)
   jquery-rails
+  pg
   puma
   rails (= 4.0.0.beta1)
   sass-rails (~> 4.0.0.beta1)
