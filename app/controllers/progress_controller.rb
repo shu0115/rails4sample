@@ -5,14 +5,11 @@ class ProgressController < ApplicationController
     response.headers['Content-Type'] = 'text/plain'
 
     begin
-#      (0..100).step(10).each do |i|
-      (0..50).step(10).each do |i|
+      (0..100).step(10).each{ |i|
         response.stream.write("#{i}\n")
         sleep(rand * 3)
-      end
-
+      }
     rescue IOError
-
     ensure
       response.stream.close
     end

@@ -5,10 +5,8 @@ ruby "2.0.0"
 gem 'rails', '4.0.0.beta1'
 
 gem 'sqlite3', :group => :development
-
-group :production do
-  gem 'pg'
-end
+gem 'pg', :group => :production
+gem "puma"
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -41,5 +39,3 @@ gem 'jbuilder', '~> 1.0.1'
 
 # To use debugger
 # gem 'debugger'
-
-gem "puma"
