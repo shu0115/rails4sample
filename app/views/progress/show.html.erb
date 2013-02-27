@@ -1,19 +1,24 @@
-<script type="text/javascript">
-  // 接続開始
-  var eventSource = new EventSource('/progress/index');
-
-  // サーバー側イベントの共通ハンドラを定義
-  function eventLogger(event){
-    $("#progress").prepend(event.data + "<br>");
-
-    // 接続終了判定
-    if (event.data == 'stream_end') { eventSource.close() };
-  }
-
-  // messageイベントのハンドラを設定
-  eventSource.onmessage = eventLogger;
-</script>
 
 <h1>progress#show</h1>
 
 <div id="progress"></div>
+
+<script type="text/javascript">
+  jQuery(document).ready(function() {
+    setTimeout(function() {
+      // 接続開始
+      var source = new EventSource('/progress/index');
+
+      // サーバー側イベントの共通ハンドラを定義
+      function eventLogger(event){
+        $("#progress").prepend(event.data + "<br>");
+
+        // 接続終了判定
+        if (event.data == 'stream_end') { source.close() };
+      }
+
+      // messageイベントのハンドラを設定
+      source.onmessage = eventLogger;
+    }, 1);
+  });
+</script>
