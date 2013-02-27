@@ -1,6 +1,14 @@
 
 <h1>progress#show</h1>
 
+<h3>Total</h3>
+
+<div id="refresh"></div>
+
+<hr />
+
+<h3>Progress</h3>
+
 <div id="progress"></div>
 
 <script type="text/javascript">
@@ -19,6 +27,21 @@
 
       // messageイベントのハンドラを設定
       source.onmessage = eventLogger;
+    }, 1);
+  });
+</script>
+
+<script type="text/javascript">
+  jQuery(document).ready(function() {
+    setTimeout(function() {
+      var source = new EventSource('/progress/index');
+      source.addEventListener('refresh', function(e) {
+        $("#refresh").prepend(event.data + "<br>");
+        // window.location.reload();
+
+        // 接続終了判定
+        if (event.data == 'stream_end') { source.close() };
+      });
     }, 1);
   });
 </script>

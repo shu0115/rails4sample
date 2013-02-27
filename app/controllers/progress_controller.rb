@@ -10,11 +10,18 @@ class ProgressController < ApplicationController
     sse = Reloader::SSE.new(response.stream)
 
     begin
+      total = 0
+
       (0..100).step(10).each{ |i|
         puts "[ #{i} ]"
         sse.write( "#{Time.now.strftime("%Y/%m/%d %H:%M:%S")}" + " - #{i}" )
+        total += i
         sleep( rand(1..3) )
       }
+
+      puts "[ total : #{total} ]"
+
+      sse.write( "#{Time.now.strftime("%Y/%m/%d %H:%M:%S")}" + " - #{total}", event: 'refresh' )
 
       # 接続終了送信
 #      sse.write("stream_end")
