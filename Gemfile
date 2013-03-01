@@ -8,6 +8,7 @@ gem 'sqlite3', :group => :development
 gem 'pg', :group => :production
 gem 'puma'
 gem 'tapp'
+gem 'awesome_print'
 gem 'newrelic_rpm'
 
 

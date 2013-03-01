@@ -10,7 +10,11 @@
 
 <%= link_to( "トップ", root_path ) %>
  | <%= link_to( "タスク", tasks_path ) %>
- | <%= link_to( "リアルタイム", realtime_show_tasks_path ) %><br />
+ | <%= link_to( "リアルタイム", realtime_show_tasks_path ) %>
+<br />
+<%= link_to( "アタック", progress_attack_show_path ) %>
+ | <%= link_to( "アタックエンド", progress_attack_end_path ) %>
+ | <%= link_to( "オールストップ", progress_attack_end_path( all_stop: "true" ) ) %>
 
 <br />
 

@@ -15,6 +15,9 @@ Rails4sample::Application.routes.draw do
   get 'progress' => 'progress#index'
   get 'progress/index'
   get 'progress/show'
+  get 'progress/attack'
+  get 'progress/attack_show'
+  get 'progress/attack_end'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
