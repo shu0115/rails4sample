@@ -49,7 +49,8 @@ class ProgressController < ApplicationController
     sse = Reloader::SSE.new(response.stream)
 
     begin
-      url  = "https://canbus.herokuapp.com/"
+#      url  = "https://canbus.herokuapp.com/"
+      url  = "https://canbus.herokuapp.com/canvas"
       url  = URI.parse( url )
       http = Net::HTTP.new( url.host, url.port )
       http.use_ssl = true if url.port == 443
@@ -59,7 +60,7 @@ class ProgressController < ApplicationController
 
       str = ""
 
-      1.upto(5){ |i|
+      1.upto(10){ |i|
         response = http.get( path )
         status   = response.inspect.delete("#<>")
         str      = "[ #{i} | #{Time.now.strftime("%Y/%m/%d %H:%M:%S")}" + " | #{url} | #{status} | #{$all_stop} ]"
