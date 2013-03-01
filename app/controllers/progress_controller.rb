@@ -49,8 +49,7 @@ class ProgressController < ApplicationController
     sse = Reloader::SSE.new(response.stream)
 
     begin
-#      url  = "https://canbus.herokuapp.com/"
-      url  = "https://canbus.herokuapp.com/canvas"
+      url  = "https://canbus.herokuapp.com/"
       url  = URI.parse( url )
       http = Net::HTTP.new( url.host, url.port )
       http.use_ssl = true if url.port == 443
