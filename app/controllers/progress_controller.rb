@@ -56,16 +56,16 @@ class ProgressController < ApplicationController
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE if url.port == 443
       path = url.path
       path += "?" + url.query unless url.query.nil?
-      response = http.get( path )
 
-      status = response.inspect.delete("#<>")
+      str = ""
 
-      str = "[ #{Time.now.strftime("%Y/%m/%d %H:%M:%S")}" + " | #{url} | #{status} | #{$all_stop} ]"
+      1.upto(5){ |i|
+        response = http.get( path )
+        status   = response.inspect.delete("#<>")
+        str      = "[ #{i} | #{Time.now.strftime("%Y/%m/%d %H:%M:%S")}" + " | #{url} | #{status} | #{$all_stop} ]"
+        puts str
+      }
 
-      # puts "[ #{Time.now.strftime("%Y/%m/%d %H:%M:%S")}" + " - #{status} ]"
-      # sse.write( "#{Time.now.strftime("%Y/%m/%d %H:%M:%S")}" + " - #{status}", event: 'refresh' )
-
-      puts str
       sse.write( str, event: 'refresh' )
 
       # 接続終了送信
