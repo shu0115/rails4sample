@@ -1,5 +1,8 @@
 Rails4sample::Application.routes.draw do
-  resources :tasks
+  resources :tasks do
+    get "realtime", on: :collection
+    get "realtime_show", on: :collection
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

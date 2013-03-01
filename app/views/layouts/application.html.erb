@@ -8,6 +8,12 @@
 </head>
 <body>
 
+<%= link_to( "トップ", root_path ) %>
+ | <%= link_to( "タスク", tasks_path ) %>
+ | <%= link_to( "リアルタイム", realtime_show_tasks_path ) %><br />
+
+<br />
+
 <%= yield %>
 
 </body>

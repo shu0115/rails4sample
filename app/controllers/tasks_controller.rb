@@ -1,10 +1,13 @@
+require 'reloader/sse'
+
 class TasksController < ApplicationController
+  include ActionController::Live
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   # GET /tasks
   # GET /tasks.json
   def index
-    @tasks = Task.all
+    @tasks = Task.order( created_at: :desc ).all
   end
 
   # GET /tasks/1
@@ -59,6 +62,35 @@ class TasksController < ApplicationController
       format.html { redirect_to tasks_url }
       format.json { head :no_content }
     end
+  end
+
+  #----------#
+  # realtime #
+  #----------#
+  def realtime
+    response.headers['Content-Type'] = 'text/event-stream'
+    sse = Reloader::SSE.new(response.stream)
+
+    begin
+      tasks = Task.all
+      Task.create( title: "タスク#{tasks.length}", content: "コンテント#{tasks.length}" ) if tasks.length <= 9000
+
+      puts "[ #{Time.now.strftime("%Y/%m/%d %H:%M:%S")}" + " - #{tasks.length} ]"
+      sse.write( "#{Time.now.strftime("%Y/%m/%d %H:%M:%S")}" + " - #{tasks.length}", event: 'refresh' )
+
+      # 接続終了送信
+#      sse.write("stream_end")
+    rescue IOError
+      # When the client disconnects, we'll get an IOError on write
+    ensure
+      sse.close
+    end
+  end
+
+  #---------------#
+  # realtime_show #
+  #---------------#
+  def realtime_show
   end
 
   private

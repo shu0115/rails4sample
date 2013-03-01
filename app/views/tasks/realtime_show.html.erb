@@ -1,0 +1,20 @@
+
+<h1>RealTime Show</h1>
+
+<div id="tasks_count"></div>
+
+<hr />
+
+<script type="text/javascript">
+  jQuery(document).ready(function() {
+    setTimeout(function() {
+      var source = new EventSource('/tasks/realtime');
+      source.addEventListener('refresh', function(e) {
+        $("#tasks_count").prepend(event.data + "<br>");
+
+        // 接続終了判定
+        if (event.data == 'stream_end') { source.close() };
+      });
+    }, 1);
+  });
+</script>

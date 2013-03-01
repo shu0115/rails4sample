@@ -6,7 +6,8 @@ gem 'rails', '4.0.0.beta1'
 
 gem 'sqlite3', :group => :development
 gem 'pg', :group => :production
-gem "puma"
+gem 'puma'
+gem 'tapp'
 
 # Gems used only for assets and not required
 # in production environments by default.
