@@ -7,6 +7,7 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.json
   def index
+    session[:realtime_end] = true
     @tasks = Task.order( created_at: :desc ).all
   end
 
@@ -79,7 +80,9 @@ class TasksController < ApplicationController
       sse.write( "#{Time.now.strftime("%Y/%m/%d %H:%M:%S")}" + " - #{tasks.length}", event: 'refresh' )
 
       # 接続終了送信
-#      sse.write("stream_end")
+      if session[:realtime_end] == true
+        sse.write("stream_end")
+      end
     rescue IOError
       # When the client disconnects, we'll get an IOError on write
     ensure
@@ -91,6 +94,7 @@ class TasksController < ApplicationController
   # realtime_show #
   #---------------#
   def realtime_show
+    session[:realtime_end] = false
   end
 
   private
